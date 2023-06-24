@@ -8,18 +8,18 @@ public interface userMapper {
 
     /**/
     @Select("SELECT * FROM sc_user WHERE uaccount = #{uaccount} and upassword = #{upassword}")
-    User selectByAP(@Param("uaccount") String uaccount,@Param("upassword") String upassword);
+    User selectByAP(@Param("uaccount") String account,@Param("upassword") String password);
 
     /**/
     @Select("SELECT COUNT(*) FROM sc_user WHERE uaccount = #{uaccount}")
-    int selectByAccount(@Param("uaccount") String uaccount);
+    int selectByAccount(@Param("uaccount") String account);
 
     /**/
-    @Insert("INSERT INTO sc_user(uaccount, upassword, islogin) VALUES(#{uaccount}, #{upassword}, 1)")
-    int insertUser(@Param("uaccount") String uaccount,@Param("upassword") String upassword);
+    int insertUser(User user);
 
-    /**/
-    @Update("UPDATE sc_user SET islogin = 0 WHERE uid = #{uid}")
-    int updatelogin(@Param("uid")Integer uid);
+    /*通过uid更新user表*/
+    int updateUserByUid(User user);
+
+
 
 }

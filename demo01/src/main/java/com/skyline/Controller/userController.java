@@ -9,6 +9,7 @@ import com.skyline.Service.orderService;
 import com.skyline.Service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,9 +33,9 @@ public class userController {
      * code:1:success 0:fail
      * */
     @RequestMapping("/login")
-    public Result login(String uaccount, String upassword) {
+    public Result login(String account, String password) {
 
-        User user = userService.selectByAP(uaccount, upassword);
+        User user = userService.loginUser(account, password);
 
         if (user == null) {
             return new Result().error("user not found!");
@@ -50,8 +51,8 @@ public class userController {
      * 状态：1:success 0:fail
      * */
     @RequestMapping("/verifyact")
-    public Result verifyAccount(String uaccount) {
-        int flag = userService.selectByAccount(uaccount);
+    public Result verifyAccount(String account) {
+        int flag = userService.checkAccount(account);
 
         if (flag == 1) {
             return new Result().success();
@@ -67,9 +68,9 @@ public class userController {
      *
      * */
     @RequestMapping("/register")
-    public Result register(String uaccount, String upassword) {
+    public Result register(String account, String password) {
 
-        int flag = userService.insertUser(uaccount, upassword);
+        int flag = userService.registerUser(account, password);
         if (flag == 1) {
             return new Result().success();
         } else {
@@ -81,10 +82,11 @@ public class userController {
      * 用户注销登录
      *参数：uid
      * */
+    /*后期可能更换成参数为账户*/
     @RequestMapping("/logoff")
-    public Result logoff(Integer uid) {
+    public Result logoff(@RequestParam("id") Integer uid) {
 
-        int flag = userService.updatelogin(uid);
+        int flag = userService.updateLogin(uid);
         if (flag == 1) {
             return new Result().success();
         } else {
@@ -98,9 +100,9 @@ public class userController {
      *
      * */
     @RequestMapping("/collectmgt")
-    public Result collectManagement(Integer uid) {
+    public Result collectManagement(@RequestParam("id") Integer uid) {
 
-        Collect collect = collectService.selectByUid(uid);
+        Collect collect = collectService.searchCollectByUid(uid);
         if (collect != null) {
             return new Result().success(collect);
         } else {
@@ -114,10 +116,10 @@ public class userController {
      *
      * */
     @RequestMapping("/ordermgt")
-    public Result orderManagement(Integer uid) {
+    public Result orderManagement(@RequestParam("id")Integer uid) {
 
 
-        Order order = orderService.selectByUid(uid);
+        Order order = orderService.selectOrderByUid(uid);
         if (order != null) {
             return new Result().success(order);
         } else {

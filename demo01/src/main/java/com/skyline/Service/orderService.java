@@ -4,5 +4,5 @@ import com.skyline.Entity.Order;
 
 public interface orderService {
 
-    Order selectByUid(Integer uid);
+    Order selectOrderByUid(Integer Uid);
 }

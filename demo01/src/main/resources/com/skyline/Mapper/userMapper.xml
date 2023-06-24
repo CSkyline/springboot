@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.skyline.Mapper.userMapper">
+
+    <update id="updateUserByUid" parameterType="com.skyline.Entity.User">
+        UPDATE sc_user
+        <set>
+            <if test="uaccount != null"> uaccount = #{uaccount}, </if>
+            <if test="upassword != null"> upassword = #{upassword}, </if>
+            <if test="uname != null"> uname = #{uname}, </if>
+            <if test="uimg != null"> uimg = #{uimg}, </if>
+            <if test="usex != null"> usex = #{usex}, </if>
+            <if test="uphone != null"> uphone = #{uphone}, </if>
+            <if test="uaddress != null"> uaddress = #{uaddress}, </if>
+            <if test="islogin != null"> islogin = #{islogin}, </if>
+        </set>
+        WHERE uid = #{uid}
+    </update>
+
+    <insert id="insertUser" parameterType="com.skyline.Entity.User">
+        INSERT INTO sc_user (
+        <trim suffixOverrides=",">
+            <if test="uid != null"> uid, </if>
+            <if test="uaccount != null"> uaccount, </if>
+            <if test="upassword != null"> upassword, </if>
+            <if test="uname != null"> uname, </if>
+            <if test="uimg != null"> uimg, </if>
+            <if test="usex != null"> usex, </if>
+            <if test="uphone != null"> uphone, </if>
+            <if test="uaddress != null"> uaddress, </if>
+            <if test="islogin != null"> islogin, </if>
+        </trim>
+        ) VALUES (
+        <trim suffixOverrides=",">
+            <if test="uid != null"> #{uid}, </if>
+            <if test="uaccount != null"> #{uaccount}, </if>
+            <if test="upassword != null"> #{upassword}, </if>
+            <if test="uname != null"> #{uname}, </if>
+            <if test="uimg != null"> #{uimg}, </if>
+            <if test="usex != null"> #{usex}, </if>
+            <if test="uphone != null"> #{uphone}, </if>
+            <if test="uaddress != null"> #{uaddress}, </if>
+            <if test="islogin != null"> #{islogin}, </if>
+        </trim>
+        )
+    </insert>
+</mapper>
+
+

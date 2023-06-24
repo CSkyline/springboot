@@ -7,5 +7,5 @@ public interface collectService {
 
     /*
     * */
-    Collect selectByUid(Integer uid);
+    Collect searchCollectByUid(Integer uid);
 }

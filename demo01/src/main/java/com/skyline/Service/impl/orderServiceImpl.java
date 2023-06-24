@@ -12,9 +12,9 @@ public class orderServiceImpl implements orderService {
     @Autowired
     private orderMapper orderMapper;
     @Override
-    public Order selectByUid(Integer uid) {
+    public Order selectOrderByUid(Integer id) {
         try {
-            Order order = orderMapper.selectByUid(uid);
+            Order order = orderMapper.selectByUid(id);
             return order;
         }catch (Exception e){
             System.out.println(e);

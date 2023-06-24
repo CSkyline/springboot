@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Select;
 public interface orderMapper {
 
     @Select("SELECT * FROM sc_order WHERE uid = #{uid}")
-    Order selectByUid(@Param("uid") Integer uid);
+    Order selectByUid(@Param("uid") Integer id);
 }

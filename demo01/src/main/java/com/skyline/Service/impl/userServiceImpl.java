@@ -14,34 +14,50 @@ public class userServiceImpl implements userService {
 
     /**/
     @Override
-    public User selectByAP(String uaccount , String upassword) {
-        User user = userMapper.selectByAP(uaccount, upassword);
-        user.setIslogin(1);
-        return user;
-    }
-
-    @Override
-    public int selectByAccount(String uaccount) {
-        int flag = userMapper.selectByAccount(uaccount);
-        return flag;
-    }
-
-    @Override
-    public int insertUser(String uaccount, String upassword) {
+    public User loginUser(String account , String password) {
         try {
-            userMapper.insertUser(uaccount,upassword);
-            return 1;
+            User user = userMapper.selectByAP(account, password);
+            user.setIslogin(1);
+            return user;
         }catch (Exception e){
             System.out.println(e);
-            System.out.println("插入用户失败，该用户名已存在！");
+            return null;
+        }
+    }
+
+    @Override
+    public int checkAccount(String account) {
+        try {
+            int flag = userMapper.selectByAccount(account);
+            return flag;
+        }catch (Exception e){
+            System.out.println(e);
             return 0;
         }
     }
 
     @Override
-    public int updatelogin(Integer uid) {
+    public int registerUser(String account, String password) {
         try {
-            userMapper.updatelogin(uid);
+            User user = new User();
+            user.setUaccount(account);
+            user.setUpassword(password);
+            user.setIslogin(0);
+            userMapper.insertUser(user);
+            return 1;
+        }catch (Exception e){
+            System.out.println(e);
+            return 0;
+        }
+    }
+
+    @Override
+    public int updateLogin(Integer uid) {
+        try {
+            User user = new User();
+            user.setUid(uid);
+            user.setIslogin(0);
+            userMapper.updateUserByUid(user);
             return 1;
         }catch (Exception e){
             System.out.println(e);

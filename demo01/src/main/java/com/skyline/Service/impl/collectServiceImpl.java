@@ -11,7 +11,7 @@ public class collectServiceImpl implements collectService {
     @Autowired
     private collectMapper collectMapper;
     @Override
-    public Collect selectByUid(Integer uid) {
+    public Collect searchCollectByUid(Integer uid) {
         try {
             Collect collect = collectMapper.selectByUid(uid);
             return collect;
