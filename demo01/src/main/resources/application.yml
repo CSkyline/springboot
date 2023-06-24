@@ -1,0 +1,35 @@
+# 指定端口
+server:
+  port: 8080
+
+# Spring配置
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/scdatabase?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    type: com.alibaba.druid.pool.DruidDataSource
+    # Druid数据源配置
+    # 初始连接数
+    initialSize: 5
+    # 最小连接池数量
+    minIdle: 10
+    # 最大连接池数量
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+
+# MyBatis配置
+mybatis:
+  configuration-properties:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+#log配置
+#logging:
+#  level:
+#    root: INFO
+#  file:
+#    enabled: false
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"
