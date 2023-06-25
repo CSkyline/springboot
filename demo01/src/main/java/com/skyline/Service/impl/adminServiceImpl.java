@@ -41,8 +41,8 @@ public class adminServiceImpl  implements adminService {
         try {
             /*有点怪怪的*/
             Admin admin = new Admin();
-            admin.setAaccount(account);
-            admin.setApassword(password);
+            admin.setAccount(account);
+            admin.setPassword(password);
             adminMapper.insertAdmin(admin);
             return 1;
         }catch (Exception e){
@@ -65,5 +65,13 @@ public class adminServiceImpl  implements adminService {
         }
     }
 
-
+    public int updateAdmin(Admin admin){
+        try {
+            adminMapper.updateByAid(admin);
+            return 1;
+        }catch (Exception e){
+            System.out.println(e);
+            return 0;
+        }
+    }
 }

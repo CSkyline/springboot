@@ -2,11 +2,16 @@ package com.skyline.Controller;
 
 import com.skyline.Common.Result;
 import com.skyline.Entity.Admin;
+import com.skyline.Entity.Product;
 import com.skyline.Service.adminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.skyline.Service.productService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -14,6 +19,9 @@ public class adminController {
 
     @Autowired
     private adminService adminService;
+
+    @Autowired
+    private productService productService;
 
     @RequestMapping("/login")
     public Result adminLogin(String account,String password){
@@ -58,5 +66,30 @@ public class adminController {
         }
     }
 
+    /**/
+    @RequestMapping("/updateadmin")
+    public Result updateAdmin(@RequestBody Admin admin){
+        int flag = adminService.updateAdmin(admin);
+        if (flag != 0){
+            System.out.println(flag);
+            return new Result().success("修改成功");
+        }else {
+            return new Result().error("修改失败");
+        }
+    }
+
+    /*
+    * 根据名字(关键字)模糊查找
+    *
+    * */
+    @RequestMapping("/selectbypname")
+    public Result selectBypName(String pname){
+        List<Product> pList = productService.selectProductBypName(pname);
+        if(pList != null){
+            return new Result().success(pList);
+        }else {
+            return new Result().error();
+        }
+    }
 
 }

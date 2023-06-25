@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
     private Integer uid;
-    private String uaccount;
-    private String upassword;
-    private String uname;
-    private String uimg;
-    private char usex;
-    private String uphone;
-    private String uaddress;
+    private String account;
+    private String password;
+    private String username;
+    private String userimg;
+    private String phone;
     private Integer islogin;
 }

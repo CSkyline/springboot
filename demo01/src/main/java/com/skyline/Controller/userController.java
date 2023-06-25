@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class userController {
@@ -102,9 +104,9 @@ public class userController {
     @RequestMapping("/collectmgt")
     public Result collectManagement(@RequestParam("id") Integer uid) {
 
-        Collect collect = collectService.searchCollectByUid(uid);
-        if (collect != null) {
-            return new Result().success(collect);
+        List<Collect> collectlist = collectService.searchCollectByUid(uid);
+        if (collectlist != null) {
+            return new Result().success(collectlist);
         } else {
             return new Result().error("未查询到收藏记录");
         }
@@ -119,9 +121,9 @@ public class userController {
     public Result orderManagement(@RequestParam("id")Integer uid) {
 
 
-        Order order = orderService.selectOrderByUid(uid);
-        if (order != null) {
-            return new Result().success(order);
+        List<Order> orderlist = orderService.selectOrderByUid(uid);
+        if (orderlist != null) {
+            return new Result().success(orderlist);
         } else {
             return new Result().error("未查询到订单记录");
         }

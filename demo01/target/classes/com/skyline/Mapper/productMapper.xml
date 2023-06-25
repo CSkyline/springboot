@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.skyline.Mapper.productMapper">
+    <!-- 根据多个id删除数据 -->
+    <delete id="deleteByIds" parameterType="java.util.List">
+        DELETE FROM sc_product
+        WHERE pid IN
+        <foreach collection="pIds" item="pId" open="(" separator="," close=")">
+            #{pid}
+        </foreach>
+    </delete>
+
+    <!--根据id修改数据-->
+    <update id="updateProduct" parameterType="com.skyline.Entity.Product">
+        UPDATE sc_product
+        <set>
+            <if test="pName != null">proname = #{proname},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="imgStr != null">img_str = #{imgstr},</if>
+            <if test="sold != null">sold = #{sold},</if>
+            <if test="cId != null">cid = #{cid},</if>
+            <if test="num != null">pnum = #{pnum},</if>
+            <if test="time != null">addtime = #{addtime},</if>
+        </set>
+        WHERE p_id = #{pId}
+    </update>
+
+    <select id="selectProductBypName" parameterType="java.lang.String" resultType="com.skyline.Entity.Product">
+        SELECT * FROM sc_product WHERE proname LIKE CONCAT('%', #{pname}, '%')
+        ORDER BY CASE WHEN proname LIKE #{pname} THEN 0 ELSE 1 END, proname
+    </select>
+
+</mapper>

@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 public class Admin {
 
     private Integer aid;
-    private String aaccount;
-    private String apassword;
-    private String aname;
-    private String atel;
-    private String aimg;
+    private String account;
+    private String password;
+    private String name;
+    private String tel;
+    private String img;
     private boolean islogin;
 }

@@ -2,7 +2,9 @@ package com.skyline.Service;
 
 import com.skyline.Entity.Order;
 
+import java.util.List;
+
 public interface orderService {
 
-    Order selectOrderByUid(Integer Uid);
+    List<Order> selectOrderByUid(Integer Uid);
 }

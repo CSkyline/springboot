@@ -8,13 +8,11 @@
     <update id="updateUserByUid" parameterType="com.skyline.Entity.User">
         UPDATE sc_user
         <set>
-            <if test="uaccount != null"> uaccount = #{uaccount}, </if>
-            <if test="upassword != null"> upassword = #{upassword}, </if>
-            <if test="uname != null"> uname = #{uname}, </if>
-            <if test="uimg != null"> uimg = #{uimg}, </if>
-            <if test="usex != null"> usex = #{usex}, </if>
-            <if test="uphone != null"> uphone = #{uphone}, </if>
-            <if test="uaddress != null"> uaddress = #{uaddress}, </if>
+            <if test="uaccount != null"> account = #{account}, </if>
+            <if test="upassword != null"> password = #{password}, </if>
+            <if test="uname != null"> username = #{username}, </if>
+            <if test="uimg != null"> userimg = #{userimg}, </if>
+            <if test="uphone != null"> phone = #{phone}, </if>
             <if test="islogin != null"> islogin = #{islogin}, </if>
         </set>
         WHERE uid = #{uid}
@@ -24,25 +22,21 @@
         INSERT INTO sc_user (
         <trim suffixOverrides=",">
             <if test="uid != null"> uid, </if>
-            <if test="uaccount != null"> uaccount, </if>
-            <if test="upassword != null"> upassword, </if>
-            <if test="uname != null"> uname, </if>
-            <if test="uimg != null"> uimg, </if>
-            <if test="usex != null"> usex, </if>
-            <if test="uphone != null"> uphone, </if>
-            <if test="uaddress != null"> uaddress, </if>
+            <if test="uaccount != null"> account, </if>
+            <if test="upassword != null"> password, </if>
+            <if test="uname != null"> username, </if>
+            <if test="uimg != null"> userimg, </if>
+            <if test="uphone != null"> phone, </if>
             <if test="islogin != null"> islogin, </if>
         </trim>
         ) VALUES (
         <trim suffixOverrides=",">
             <if test="uid != null"> #{uid}, </if>
-            <if test="uaccount != null"> #{uaccount}, </if>
-            <if test="upassword != null"> #{upassword}, </if>
-            <if test="uname != null"> #{uname}, </if>
-            <if test="uimg != null"> #{uimg}, </if>
-            <if test="usex != null"> #{usex}, </if>
-            <if test="uphone != null"> #{uphone}, </if>
-            <if test="uaddress != null"> #{uaddress}, </if>
+            <if test="account != null"> #{account}, </if>
+            <if test="password != null"> #{password}, </if>
+            <if test="username != null"> #{username}, </if>
+            <if test="userimg != null"> #{userimg}, </if>
+            <if test="phone != null"> #{phone}, </if>
             <if test="islogin != null"> #{islogin}, </if>
         </trim>
         )

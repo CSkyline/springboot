@@ -2,6 +2,7 @@ package com.skyline.Service;
 
 import com.skyline.Entity.User;
 
+
 public interface userService {
 
     /**/

@@ -11,4 +11,6 @@ public interface adminService {
     int registerAdmin(String account,String password);
 
     int loginOff(Integer aid);
-}
+    int updateAdmin(Admin admin);
+
+    }

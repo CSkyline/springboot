@@ -40,8 +40,8 @@ public class userServiceImpl implements userService {
     public int registerUser(String account, String password) {
         try {
             User user = new User();
-            user.setUaccount(account);
-            user.setUpassword(password);
+            user.setAccount(account);
+            user.setPassword(password);
             user.setIslogin(0);
             userMapper.insertUser(user);
             return 1;

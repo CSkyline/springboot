@@ -13,8 +13,15 @@ public class Result {
     private String msg; //tips message
     private Object data; // result data
 
+    /*公共静态方法*/
+
+    /*请求成功 返回成功信息msg，以及所需数据data*/
     public static Result success(Object data){return new Result(1,"success",data);}
+
+    /*请求成功 返回提示信息success 但返回数据为空（即不需要数据）*/
     public static Result success(String msg){return new Result(1,msg,null);}
+
+    /*请求成功 自定义返回提示信息 返回数据为空（即不需要数据）*/
     public static Result success(){
         return new Result(1,"success",null);
     }

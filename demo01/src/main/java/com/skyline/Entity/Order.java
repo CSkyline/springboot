@@ -4,21 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
     private Integer oid;
-    private String paysn;
     private Integer uid;
     private Integer pid;
-    private float price;
+    private Integer rid;
+    private BigDecimal price;
     private String addTime;
     private Integer status;
-    private String receiver;
-    private String tel;
-    private String address;
-    private Integer pNum;
+    private Integer pnum;
     private String postage;
-    private Integer service;
 }
