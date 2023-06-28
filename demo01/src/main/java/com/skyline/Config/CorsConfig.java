@@ -5,12 +5,15 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
+/**
+ * 配置跨域访问
+ */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-//                .allowedOrigins("*")
+                //                .allowedOrigins("*")
                 .allowedOriginPatterns("*")// 设置允许跨域请求的域名
                 .allowedHeaders("*")// 设置允许的请求头
                 .allowCredentials(true)// 是否允许证书

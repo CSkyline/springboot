@@ -8,6 +8,7 @@ import com.skyline.Service.collectService;
 import com.skyline.Service.orderService;
 import com.skyline.Service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,27 +19,29 @@ import java.util.List;
 @RequestMapping("/user")
 public class userController {
 
+    /*用户业务层接口*/
     @Autowired
     private userService userService;
 
+    /*收藏业务层接口*/
     @Autowired
     private collectService collectService;
 
+    /*订单业务层接口*/
     @Autowired
     private orderService orderService;
 
 
-    /*
-     * 登录
-     * uaccount:账号
-     * upassword:密码
-     * code:1:success 0:fail
-     * */
+    /**
+     * 登录客户端
+     *
+     * @param loginuser
+     * @return
+     */
     @RequestMapping("/login")
-    public Result login(String account, String password) {
-
-        User user = userService.loginUser(account, password);
-
+    public Result login(@RequestBody User loginuser) {
+        System.out.println(loginuser);
+        User user = userService.loginUser(loginuser.getAccount(), loginuser.getPassword());
         if (user == null) {
             return new Result().error("user not found!");
         } else {
@@ -47,11 +50,12 @@ public class userController {
     }
 
 
-    /*
-     *验证账户是否存在
-     * 参数：uaccount 账户
-     * 状态：1:success 0:fail
-     * */
+    /**
+     * 检查账户是否存在
+     *
+     * @param account 用户账号
+     * @return
+     */
     @RequestMapping("/verifyact")
     public Result verifyAccount(String account) {
         int flag = userService.checkAccount(account);
@@ -64,11 +68,13 @@ public class userController {
         }
     }
 
-    /*
-     * 用户注册
-     *参数：账号：uaccount  密码：upassword
+    /**
+     * 注册账号（用户）
      *
-     * */
+     * @param account  用户账号
+     * @param password 用户密码
+     * @return
+     */
     @RequestMapping("/register")
     public Result register(String account, String password) {
 
@@ -80,10 +86,12 @@ public class userController {
         }
     }
 
-    /*
-     * 用户注销登录
-     *参数：uid
-     * */
+    /**
+     * 注销登录
+     *
+     * @param uid 用户id
+     * @return
+     */
     /*后期可能更换成参数为账户*/
     @RequestMapping("/logoff")
     public Result logoff(@RequestParam("id") Integer uid) {
@@ -97,10 +105,12 @@ public class userController {
     }
 
 
-    /*
-     * 订单管理 order management
+    /**
+     * 收藏管理
      *
-     * */
+     * @param uid 用户id
+     * @return
+     */
     @RequestMapping("/collectmgt")
     public Result collectManagement(@RequestParam("id") Integer uid) {
 
@@ -112,13 +122,14 @@ public class userController {
         }
     }
 
-    /*
+    /**
      * 订单管理
      *
-     *
-     * */
+     * @param uid 用户id
+     * @return 用户信息
+     */
     @RequestMapping("/ordermgt")
-    public Result orderManagement(@RequestParam("id")Integer uid) {
+    public Result orderManagement(@RequestParam("id") Integer uid) {
 
 
         List<Order> orderlist = orderService.selectOrderByUid(uid);

@@ -1,15 +1,24 @@
-package com.skyline.Entity;
+package com.skyline.Util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
+/**
+ * desc:
+ *
+ * @author : skyline
+ * @version : [v1.0]
+ * @createTime : [2023/6/27 14:47]
+ */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+@AllArgsConstructor
+@ToString
+public class OrderResult {
     private Integer oid;
     private Integer uid;
     private Integer pid;
@@ -19,4 +28,7 @@ public class Order {
     private Integer status;
     private Integer pnum;
     private String postage;
+    private String account;
+    private String phone;
+    private String proname;
 }

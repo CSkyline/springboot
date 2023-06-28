@@ -1,10 +1,7 @@
 package com.skyline.Mapper;
 
 import com.skyline.Entity.Product;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,19 +10,19 @@ import java.util.List;
 public interface productMapper {
 
     /*向product表插入数据*/
-//    @Insert("INSERT INTO sc_product (p_id, p_name, price, desc, img_str, sold, c_id, num, time) " +
-//            "VALUES (#{pId}, #{pName}, #{price}, #{desc}, #{imgStr}, #{sold}, #{cId}, #{num}, #{time})")
-//    int insert(Product products);
+    @Insert("INSERT INTO sc_product (pid, proname, price, description, imgstr, soldnum, cid, num, addtime) " +
+            "VALUES (#{pid}, #{proname}, #{price}, #{description}, #{imgstr}, #{soldnum}, #{cid}, #{num}, #{addtime})")
+    int insertProduct(Product product);
 
     /*通过当id删除product表的数据*/
     @Delete("DELETE FROM sc_product WHERE pid = #{pid}")
-    int deleteById(@Param("pid") Integer pid);
+    int deleteByPid(@Param("pid") Integer pid);
 
     /*根据多个id删除*/
-    int deleteByIds(List<Integer> pids);
+    int deleteProductByIds(List<Integer> pids);
 
     /*根据id修改*/
-    int updateProduct(Product product);
+    int updateProductByPid(Product product);
 
     /*查询product表所有数据*/
     @Select("SELECT * FROM sc_product")
@@ -54,10 +51,17 @@ public interface productMapper {
     @Select("SELECT * FROM sc_product WHERE price BETWEEN #{minPrice} AND #{maxPrice}")
     List<Product> selectProductByPrice(@Param("minPrice") BigDecimal minPrice, BigDecimal maxPrice);
 
+
     /*
     * 通过商品名称进项模糊查询查询
     * */
-
     List<Product> selectProductBypName(String pname);
+
+
+    /*
+    * 通过商品名称和上架时间查询
+    *
+    * */
+    List<Product> selectProductByNameTime(String pname,String addtime);
 
 }

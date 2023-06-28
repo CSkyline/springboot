@@ -8,11 +8,11 @@
     <update id="updateByAid" parameterType="com.skyline.Entity.Admin">
         UPDATE sc_admin
         <set>
-            <if test="aaccount != null">account = #{account},</if>
-            <if test="apassword != null">password = #{password},</if>
-            <if test="aname != null">name = #{name},</if>
-            <if test="atel != null">tel = #{tel},</if>
-            <if test="aimg != null">img = #{img},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="tel != null">tel = #{tel},</if>
+            <if test="img != null">img = #{img},</if>
             <if test="islogin != null">islogin = #{islogin},</if>
         </set>
         WHERE aid = #{aid}

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,9 +13,9 @@ public class Product {
     private Integer pid;
     private String proname;
     private BigDecimal price;
-    private String desc;
-    private List<String> imgstr;
-    private Integer sold;
+    private String description;
+    private String imgstr;
+    private Integer soldnum;
     private Integer cid;
     private Integer num;
     private String addtime;
