@@ -3,7 +3,7 @@ package com.skyline.Controller;
 import com.skyline.Common.Result;
 import com.skyline.Entity.Classify;
 import com.skyline.Service.classifyService;
-import com.skyline.Util.ClassifyResult;
+import com.skyline.Util.ClassifyResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * desc:分类控制层
- *
  * @author : skyline
  * @version : [v1.0]
  * @createTime : [2023/6/27 9:11]
@@ -25,23 +24,21 @@ public class classifyController {
 
     /**
      * 添加分类
-     *
      * @param classify
      * @return
      */
     @PostMapping("/addclassify")
     public Result addClassify(@RequestBody Classify classify) {
         if (classify != null) {
-            List<ClassifyResult> cRList = classifyService.addClassify(classify);
-            return new Result().success(cRList);
+            List<ClassifyResultUtil> cRList = classifyService.addClassify(classify);
+            return Result.success(cRList);
         } else {
-            return new Result().error("参数为空！");
+            return Result.error("参数为空！");
         }
     }
 
     /**
      * 删除分类（若有子分类会一并删除）
-     *
      * @param cid
      * @return
      */
@@ -49,29 +46,28 @@ public class classifyController {
     public Result delClassify(Integer cid) {
 
         if (cid == null) {
-            return new Result().error("参数为空");
+            return Result.error("参数为空");
         } else {
-            List<ClassifyResult> cRList = classifyService.delClassify(cid);
+            List<ClassifyResultUtil> cRList = classifyService.delClassify(cid);
             if (cRList != null) {
-                return new Result().success(cRList);
+                return Result.success(cRList);
             } else {
-                return new Result().error("删除失败");
+                return Result.error("删除失败");
             }
         }
     }
 
     /**
      * 查询classify表所有记录
-     *
      * @return
      */
     @GetMapping("/classifyshow")
     public Result classifyShow() {
-        List<ClassifyResult> cRList = classifyService.classifyShow();
+        List<ClassifyResultUtil> cRList = classifyService.classifyShow();
         if (cRList.isEmpty() == false) {
-            return new Result().success(cRList);
+            return Result.success(cRList);
         } else {
-            return new Result().error();
+            return Result.error();
         }
     }
 
@@ -79,13 +75,13 @@ public class classifyController {
     public Result updateClassify(@RequestBody Classify classify) {
         System.out.println(classify);
         if (classify.getCid() == null) {
-            return new Result().error("参数错误");
+            return Result.error("参数错误");
         } else {
-            List<ClassifyResult> cRList = classifyService.updateClassify(classify);
+            List<ClassifyResultUtil> cRList = classifyService.updateClassify(classify);
             if (cRList.isEmpty() == false) {
-                return new Result().success(cRList);
+                return Result.success(cRList);
             } else {
-                return new Result().error();
+                return Result.error();
             }
         }
     }

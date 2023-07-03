@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 
 /**
  * desc:
- *
  * @author : skyline
  * @version : [v1.0]
  * @createTime : [2023/6/27 14:47]
@@ -18,7 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class OrderResult {
+public class OrderResultUtil {
     private Integer oid;
     private Integer uid;
     private Integer pid;

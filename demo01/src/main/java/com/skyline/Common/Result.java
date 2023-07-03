@@ -3,11 +3,13 @@ package com.skyline.Common;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Result {
     private Integer code; //1:success 0:fail
     private String msg; //tips message
@@ -38,11 +40,4 @@ public class Result {
         return new Result(0, "fail", null);
     }
 
-    public String toString() {
-        return "Result{" +
-                "code=" + code +
-                ", msg=" + msg +
-                ", data=" + data +
-                "}";
-    }
 }

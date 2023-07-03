@@ -27,7 +27,6 @@ public class productController {
 
     /**
      * 根据名字(关键字)模糊查找--控制层接口
-     *
      * @param pname 商品名字
      * @return
      */
@@ -35,31 +34,29 @@ public class productController {
     public Result selectBypName(String pname) {
         List<Product> pList = productService.selectProductBypName(pname);
         if (pList != null) {
-            return new Result().success(pList);
+            return Result.success(pList);
         } else {
-            return new Result().error();
+            return Result.error();
         }
     }
 
     /**
      * 返回product表所有记录--控制层接口
-     *
      * @return
      */
     @RequestMapping("/allpro")
     public Result resultAllProducts() {
         List<Product> pList = productService.selectAllProducts();
         if (pList != null) {
-            return new Result().success(pList);
+            return Result.success(pList);
         } else {
-            return new Result().error();
+            return Result.error();
         }
     }
 
 
     /**
      * 添加商品---控制层接口
-     *
      * @param product 所添加商品信息
      * @return
      */
@@ -67,15 +64,14 @@ public class productController {
     public Result addProduct(@RequestBody Product product) {
         int flag = productService.addProduct(product);
         if (flag != 0) {
-            return new Result().success("插入成功");
+            return Result.success("插入成功");
         } else {
-            return new Result().error("插入失败");
+            return Result.error("插入失败");
         }
     }
 
     /**
      * 根据商品id修改商品信息---控制层接口
-     *
      * @param product 所需修改商品信息
      * @return
      */
@@ -84,15 +80,14 @@ public class productController {
         System.out.println(product);
         int flag = productService.updateProductByPid(product);
         if (flag != 0) {
-            return new Result().success("修改成功!");
+            return Result.success("修改成功!");
         } else {
-            return new Result().error("修改失败！");
+            return Result.error("修改失败！");
         }
     }
 
     /**
      * 批量（单个）删除商品---控制层接口
-     *
      * @param pidList 商品id集合
      */
     @RequestMapping("/batchdelete")
@@ -100,15 +95,14 @@ public class productController {
         System.out.println(pidList);
         int flag = productService.deleteProductsByPids(pidList);
         if (flag != 0) {
-            return new Result().success("删除成功");
+            return Result.success("删除成功");
         } else {
-            return new Result().error("删除失败");
+            return Result.error("删除失败");
         }
     }
 
     /**
      * 分页显示--控制层接口
-     *
      * @param pageNum  当前页
      * @param pageSize 当前页展示数量
      * @return 当前页记录
@@ -117,9 +111,9 @@ public class productController {
     public Result pagingPage(Integer pageNum, Integer pageSize) {
         PageInfo<Product> pPageInfo = productService.pagingShow(pageNum, pageSize);
         if (pPageInfo != null) {
-            return new Result().success(pPageInfo);
+            return Result.success(pPageInfo);
         } else {
-            return new Result().error("查找失败");
+            return Result.error("查找失败");
         }
     }
 

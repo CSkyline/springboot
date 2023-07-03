@@ -6,7 +6,7 @@
 <mapper namespace="com.skyline.Mapper.orderMapper">
 
     <!---->
-    <resultMap id="orderResultMap" type="com.skyline.Entity.OrderResult">
+    <resultMap id="orderResultMap" type="com.skyline.Util.OrderResultUtil">
         <id property="oid" column="oid"/>
         <result property="uid" column="uid"/>
         <result property="pid" column="pid"/>

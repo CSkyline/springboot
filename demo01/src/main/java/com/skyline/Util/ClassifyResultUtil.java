@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * desc:
- *
  * @author : skyline
  * @version : [v1.0]
  * @createTime : [2023/6/27 10:21]
@@ -19,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ClassifyResult {
+public class ClassifyResultUtil {
 
     private Integer cid;
     private String name;

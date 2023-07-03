@@ -8,7 +8,6 @@ import com.skyline.Service.collectService;
 import com.skyline.Service.orderService;
 import com.skyline.Service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,25 +33,25 @@ public class userController {
 
     /**
      * 登录客户端
-     *
      * @param loginuser
      * @return
      */
     @RequestMapping("/login")
-    public Result login(@RequestBody User loginuser) {
-        System.out.println(loginuser);
-        User user = userService.loginUser(loginuser.getAccount(), loginuser.getPassword());
+    //        public Result login(@RequestBody User loginuser)
+    public Result login(String account, String password) {
+
+        //        System.out.println(loginuser);
+        User user = userService.loginUser(account, password);
         if (user == null) {
-            return new Result().error("user not found!");
+            return Result.error("user not found!");
         } else {
-            return new Result().success(user);
+            return Result.success(user);
         }
     }
 
 
     /**
      * 检查账户是否存在
-     *
      * @param account 用户账号
      * @return
      */
@@ -61,16 +60,15 @@ public class userController {
         int flag = userService.checkAccount(account);
 
         if (flag == 1) {
-            return new Result().success();
+            return Result.success();
         } else {
 
-            return new Result().error("该账号已存在");
+            return Result.error("该账号已存在");
         }
     }
 
     /**
      * 注册账号（用户）
-     *
      * @param account  用户账号
      * @param password 用户密码
      * @return
@@ -80,15 +78,14 @@ public class userController {
 
         int flag = userService.registerUser(account, password);
         if (flag == 1) {
-            return new Result().success();
+            return Result.success();
         } else {
-            return new Result().error("该用户已存在");
+            return Result.error("该用户已存在");
         }
     }
 
     /**
      * 注销登录
-     *
      * @param uid 用户id
      * @return
      */
@@ -98,16 +95,15 @@ public class userController {
 
         int flag = userService.updateLogin(uid);
         if (flag == 1) {
-            return new Result().success();
+            return Result.success();
         } else {
-            return new Result().error();
+            return Result.error();
         }
     }
 
 
     /**
      * 收藏管理
-     *
      * @param uid 用户id
      * @return
      */
@@ -116,15 +112,14 @@ public class userController {
 
         List<Collect> collectlist = collectService.searchCollectByUid(uid);
         if (collectlist != null) {
-            return new Result().success(collectlist);
+            return Result.success(collectlist);
         } else {
-            return new Result().error("未查询到收藏记录");
+            return Result.error("未查询到收藏记录");
         }
     }
 
     /**
      * 订单管理
-     *
      * @param uid 用户id
      * @return 用户信息
      */
@@ -134,9 +129,9 @@ public class userController {
 
         List<Order> orderlist = orderService.selectOrderByUid(uid);
         if (orderlist != null) {
-            return new Result().success(orderlist);
+            return Result.success(orderlist);
         } else {
-            return new Result().error("未查询到订单记录");
+            return Result.error("未查询到订单记录");
         }
     }
 

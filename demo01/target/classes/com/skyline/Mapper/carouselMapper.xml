@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.skyline.Mapper.carouselMapper">
+
+    <!--批量删除carousel表记录-->
+    <delete id="delCarouselByIds" parameterType="java.util.List">
+        DELETE FROM sc_carousel
+        WHERE id IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--动态修改carousel表记录-->
+    <update id="updateCarousel" parameterType="com.skyline.Entity.Carousel">
+        UPDATE carousel_table
+        <set>
+            <!-- 根据需要动态更新字段 -->
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

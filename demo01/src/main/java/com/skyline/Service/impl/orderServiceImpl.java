@@ -3,7 +3,7 @@ package com.skyline.Service.impl;
 import com.skyline.Entity.Order;
 import com.skyline.Mapper.orderMapper;
 import com.skyline.Service.orderService;
-import com.skyline.Util.OrderResult;
+import com.skyline.Util.OrderResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +33,9 @@ public class orderServiceImpl implements orderService {
      * @return List<OrderResult> findOrderByOidAddTimeAndAccount(Integer oid, String addtime, String account);
      */
     @Override
-    public List<OrderResult> findOrderByOidAddTimeAndAccount(Integer oid, String addtime, String account) {
+    public List<OrderResultUtil> findOrderByOidAddTimeAndAccount(Integer oid, String addtime, String account) {
         try {
-            List<OrderResult> oRList = orderMapper.findOrderByOidAddTimeAndAccount(oid, addtime, account);
+            List<OrderResultUtil> oRList = orderMapper.findOrderByOidAddTimeAndAccount(oid, addtime, account);
             return oRList;
         } catch (Exception e) {
             System.out.println(e);
