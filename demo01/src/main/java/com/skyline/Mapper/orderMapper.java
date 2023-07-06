@@ -1,7 +1,7 @@
 package com.skyline.Mapper;
 
 import com.skyline.Entity.Order;
-import com.skyline.Util.OrderResultUtil;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -12,9 +12,9 @@ import java.util.List;
 public interface orderMapper {
 
     @Select("SELECT * FROM sc_order WHERE uid = #{uid}")
-    List<Order> selectByUid(@Param("uid") Integer uid);
+    List<Order> AselectByUid(@Param("uid") Integer uid);
 
-    List<OrderResultUtil> findOrderByOidAddTimeAndAccount(Integer oid, String addtime, String account);
+    //    List<OrderResult> findOrderByOidAddTimeAndAccount(Integer oid, String addtime, String account);
 
 
     /**
@@ -30,4 +30,19 @@ public interface orderMapper {
      */
     @Select("SELECT SUM(price) FROM sc_order;")
     double selectPriceSum();
+
+
+    @Select("SELECT * FROM sc_order")
+    List<Order> selectAll();
+
+    List<Order> vagueSelectById(Integer oid);
+
+    @Delete("DELETE FROM sc_order WHERE oid = #{oid}")
+    int delOrderByOid(Integer oid);
+
+    /*deng*/
+    @Select("SELECT DISTINCT * FROM sc_order  right JOIN (SELECT rid,recname,address,tel FROM sc_receinfo) AS sc_rec USING(rid) WHERE uid=#{uid}")
+    List<Order> selectByUid(@Param("uid") Integer uid);
+
+
 }

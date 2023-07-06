@@ -8,39 +8,60 @@
     <update id="updateUserByUid" parameterType="com.skyline.Entity.User">
         UPDATE sc_user
         <set>
-            <if test="account != null"> account = #{account}, </if>
-            <if test="password != null"> password = #{password}, </if>
-            <if test="username != null"> username = #{username}, </if>
-            <if test="userimg != null"> userimg = #{userimg}, </if>
-            <if test="phone != null"> phone = #{phone}, </if>
-            <if test="islogin != null"> islogin = #{islogin}, </if>
+            <if test="account != null">account = #{account},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="userimg != null">userimg = #{userimg},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="islogin != null">islogin = #{islogin},</if>
         </set>
         WHERE uid = #{uid}
     </update>
 
-    <insert id="insertUser" parameterType="com.skyline.Entity.User">
+    <insert id="AinsertUser" parameterType="com.skyline.Entity.User">
         INSERT INTO sc_user (
         <trim suffixOverrides=",">
-            <if test="uid != null"> uid, </if>
-            <if test="account != null"> account, </if>
-            <if test="password != null"> password, </if>
-            <if test="username != null"> username, </if>
-            <if test="userimg != null"> userimg, </if>
-            <if test="phone != null"> phone, </if>
-            <if test="islogin != null"> islogin, </if>
+            <if test="uid != null">uid,</if>
+            <if test="account != null">account,</if>
+            <if test="password != null">password,</if>
+            <if test="username != null">username,</if>
+            <if test="userimg != null">userimg,</if>
+            <if test="phone != null">phone,</if>
+            <if test="islogin != null">islogin,</if>
         </trim>
         ) VALUES (
         <trim suffixOverrides=",">
-            <if test="uid != null"> #{uid}, </if>
-            <if test="account != null"> #{account}, </if>
-            <if test="password != null"> #{password}, </if>
-            <if test="username != null"> #{username}, </if>
-            <if test="userimg != null"> #{userimg}, </if>
-            <if test="phone != null"> #{phone}, </if>
-            <if test="islogin != null"> #{islogin}, </if>
+            <if test="uid != null">#{uid},</if>
+            <if test="account != null">#{account},</if>
+            <if test="password != null">#{password},</if>
+            <if test="username != null">#{username},</if>
+            <if test="userimg != null">#{userimg},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="islogin != null">#{islogin},</if>
         </trim>
         )
     </insert>
+
+    <select id="selectByAccountId" resultType="com.skyline.Entity.User">
+        SELECT * FROM sc_user
+        <where>
+            <if test="account != null and account != ''">
+                AND account like CONCAT('%',#{account},'%')
+            </if>
+            <if test="uid != null and uid != ''">
+                AND uid like CONCAT('%',#{uid},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteUserByIds" parameterType="java.util.List">
+        DELETE FROM sc_user
+        WHERE uid IN
+        <foreach collection="uids" item="uid" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </delete>
+
 </mapper>
 
 

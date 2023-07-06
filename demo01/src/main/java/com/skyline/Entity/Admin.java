@@ -16,4 +16,5 @@ public class Admin {
     private String tel;
     private String img;
     private boolean islogin;
+    private String oldpassword;
 }

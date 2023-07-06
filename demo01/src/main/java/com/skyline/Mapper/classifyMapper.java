@@ -16,7 +16,7 @@ public interface classifyMapper {
      * @param classify classif表对应的实体类
      * @return *
      */
-    @Insert("INSERT INTO sc_classify (fcid, cname, cicon) VALUES (#{fcid}, #{cname}, #{cicon});")
+    @Insert("INSERT INTO sc_classify (cname) VALUES (#{cname})")
     int insertClassify(Classify classify);
 
 
@@ -50,23 +50,17 @@ public interface classifyMapper {
      * 查询一级分类，即 fcid 属性为空的分类记录
      * @return
      */
-    @Select("SELECT * FROM sc_classify WHERE fcid IS NULL")
-    List<Classify> findFirstLevelClassify();
-
     /**
      * 查询某一级分类下的所有子分类，即 fcid 属性等于指定 cid 的分类记录
      * @param cid
      * @return
      */
-    @Select("SELECT * FROM sc_classify WHERE fcid = #{fcid}")
-    List<Classify> findSubClassifyByFCid(@Param("fcid") Integer cid);
+    @Select("SELECT * FROM sc_classify WHERE cid = #{cid}")
+    List<Classify> findClassifyByCid(@Param("cid") Integer cid);
 
 
     @Select("SELECT * FROM sc_classify")
     List<Classify> selectAll();
-
-    @Select("SELECT cid FROM sc_classify WHERE fcid = #{fcid}")
-    List<Integer> selectCidByFcid(@Param("fcid") Integer fcid);
 
 
 }

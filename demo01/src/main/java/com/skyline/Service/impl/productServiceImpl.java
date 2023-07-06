@@ -3,12 +3,18 @@ package com.skyline.Service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.skyline.Entity.Product;
+import com.skyline.Mapper.SearchMapper;
 import com.skyline.Mapper.productMapper;
+import com.skyline.Request.productReceive;
+import com.skyline.Request.productResult;
 import com.skyline.Service.productService;
+import com.skyline.Util.productInitUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class productServiceImpl implements productService {
@@ -16,9 +22,21 @@ public class productServiceImpl implements productService {
     @Autowired
     productMapper productMapper;
 
+    @Autowired
+    SearchMapper searchMapper;
+
+    @Override
+    public List<Product> selectByCid(Integer cid) {
+        try {
+            return productMapper.selectBycid(cid);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
     /**
-     * 通过商品名称进项模糊查询查询---业务层实现
-     *
+     * 通过商品名称进项模糊查询查询
      * @param pName 商品名字
      * @return
      */
@@ -37,8 +55,7 @@ public class productServiceImpl implements productService {
     }
 
     /**
-     * 查找所有商品---业务层实现
-     *
+     * 查找所有商品
      * @return 返回商品表所有商品
      */
     @Override
@@ -53,15 +70,15 @@ public class productServiceImpl implements productService {
     }
 
     /**
-     * 添加单个商品---业务层实现
-     *
-     * @param product 添加的商品信息
+     * 添加单个商品
      * @return
      */
     @Override
-    public int addProduct(Product product) {
+    public int addProduct(productReceive pReceive) {
         try {
-            productMapper.insertProduct(product);
+            Product p = productInitUtil.initProduct(pReceive);
+            /*插入商品*/
+            productMapper.insertProduct(p);
             return 1;
         } catch (Exception e) {
             System.out.println(e);
@@ -70,15 +87,14 @@ public class productServiceImpl implements productService {
     }
 
     /**
-     * 通过商品id修改商品信息---业务层实现
-     *
-     * @param product 所修改信息的的包装类product
+     * 通过商品id修改商品信息
      * @return
      */
     @Override
-    public int updateProductByPid(Product product) {
+    public int updateProductByPid(productReceive pReceive) {
         try {
-            productMapper.updateProductByPid(product);
+            Product p = productInitUtil.initProduct(pReceive);
+            productMapper.updateProductByPid(p);
             return 1;
         } catch (Exception e) {
             System.out.println(e);
@@ -87,8 +103,7 @@ public class productServiceImpl implements productService {
     }
 
     /**
-     * 通过id集合删除商品---业务层实现4
-     *
+     * 通过id集合删除商品
      * @param pidList 商品id集合
      * @return
      */
@@ -104,8 +119,7 @@ public class productServiceImpl implements productService {
     }
 
     /**
-     * 分页显示---业务层实现
-     *
+     * 分页显示
      * @param pageNum  当前页
      * @param pageSize 每页显示数量
      * @return
@@ -122,5 +136,110 @@ public class productServiceImpl implements productService {
             System.out.println(e);
             return null;
         }
+    }
+
+    @Override
+    public int productNum() {
+        int pNum = productMapper.selectProductNum();
+        return pNum;
+    }
+
+    @Override
+    public Map<String, Object> AllProductInfo() {
+        List<productResult> pRList = productMapper.selectAllProductInfo();
+        int lSize = pRList.size();
+        HashMap<String, Object> pMap = new HashMap<>();
+        pMap.put("goodsList", pRList);
+        pMap.put("lSize", lSize);
+        return pMap;
+    }
+
+    @Override
+    public Map<String, Object> selectProductByNamePid(String proname, Integer pid) {
+        List<productResult> pRList = productMapper.selectProductByNamePid(proname, pid);
+        int lSize = pRList.size();
+        HashMap<String, Object> pMap = new HashMap<>();
+        pMap.put("goodsList", pRList);
+        pMap.put("lSize", lSize);
+        return pMap;
+    }
+
+    @Override
+    public int delByPid(Integer pid) {
+        try {
+            int flag = productMapper.deleteByPid(pid);
+            return flag;
+        } catch (Exception e) {
+            System.out.println(e);
+            return 0;
+        }
+    }
+
+    @Override
+    public productResult selectSingleProduct(Integer pid) {
+        try {
+            productResult pR = productMapper.selectSingleProduct(pid);
+            return pR;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    /*deng*/
+    @Override
+    public List<Product> getGoodsinfo() {
+        try {
+
+            List<Product> products = productMapper.productinfo();
+            return products;
+        } catch (Exception e) {
+
+            System.out.println(e);
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<Product> getGoodsByClassify(Integer cid) {
+        try {
+
+            List<Product> products = productMapper.selectByClassify(cid);
+            return products;
+        } catch (Exception e) {
+
+            System.out.println(e);
+            return null;
+        }
+
+
+    }
+
+
+    @Override
+    public Product getGoodsBypid(Integer pid) {
+        try {
+            Product product = productMapper.selectBypid(pid);
+            return product;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<Product> searchGoods(String userPut) {
+        try {
+            List<Product> goods = searchMapper.selectByKeyword(userPut);
+            return goods;
+        } catch (Exception e) {
+
+            System.out.println(e);
+            return null;
+
+        }
+
     }
 }

@@ -11,12 +11,16 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Product {
     private Integer pid;
-    private String proname;
+    private String pname;
     private BigDecimal price;
     private String description;
     private String imgstr;
     private Integer soldnum;
-    private Integer cid;
     private Integer num;
     private String addtime;
+    private Integer cid;
+
 }
+
+
+

@@ -15,4 +15,5 @@ public class User {
     private String userimg;
     private String phone;
     private Integer islogin;
+    private String oldpassword;
 }

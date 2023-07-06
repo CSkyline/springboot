@@ -1,14 +1,12 @@
 package com.skyline.Controller;
 
-import com.skyline.Common.Result;
+import com.skyline.Request.OrderResult;
+import com.skyline.Request.Result;
 import com.skyline.Service.orderService;
-import com.skyline.Util.OrderResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -24,23 +22,37 @@ public class orderController {
     @Autowired
     orderService orderService;
 
-
-    /**
-     * @param oid
-     * @param addtime
-     * @param account
-     * @return
-     */
-    @PostMapping("/searchorder")
-    public Result findOrderByOidAddtimeUaccount(@PathParam("oid") Integer oid, @PathParam("addtime") String addtime, @PathParam("account") String account) {
-        System.out.println(oid);
-        System.out.println(addtime);
-        System.out.println(account);
-        List<OrderResultUtil> oRList = orderService.findOrderByOidAddTimeAndAccount(oid, addtime, account);
-        if (oRList.isEmpty() == false) {
-            return Result.success(oRList);
+    @RequestMapping("/list")
+    public Result orderList() {
+        List<OrderResult> orderResultList = orderService.orderAllList();
+        if (orderResultList.isEmpty()) {
+            return Result.error();
         } else {
-            return Result.error("未找到订单！");
+            return Result.success(orderResultList);
+        }
+    }
+
+    @RequestMapping("/oid")
+    public Result vagueSelectById(Integer oid) {
+        List<OrderResult> oRList = orderService.vagueSelectById(oid);
+        if (oRList.isEmpty()) {
+            return Result.error();
+        } else {
+            return Result.success(oRList);
+        }
+    }
+
+    @RequestMapping("/del")
+    public Result delOrderByOid(Integer oid) {
+        if (oid == null) {
+            return Result.error("oid为空");
+        } else {
+            int flag = orderService.delOrderByOid(oid);
+            if (flag == 0) {
+                return Result.error();
+            } else {
+                return Result.success("删除成功");
+            }
         }
     }
 }

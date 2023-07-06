@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skyline.Mapper.CarMapper">
+    <insert id="addProducts" parameterType="com.skyline.Entity.UserCar">
+        insert into sc_scar values (#{id},#{pid},#{num},#{uid})
+    </insert>
+
+    <delete id="deleteProducts" parameterType="Integer">
+        delete from sc_scar where id=#{id}
+    </delete>
+
+    <insert id="insertOrder" parameterType="com.skyline.Entity.Order">
+        insert into sc_order
+        values
+        (#{oid},#{uid},#{pid},#{rid}, #{price},NOW(),#{status}, #{pNum},#{postage})
+    </insert>
+
+    <select id="selectProduct" resultType="com.skyline.Entity.UserCar">
+        select * from sc_scar right JOIN (SELECT pid,proname,price,description,imgstr FROM sc_product) AS sc_p
+        USING(pid)
+    </select>
+
+
+</mapper>

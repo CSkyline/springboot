@@ -1,25 +1,23 @@
 package com.skyline.Service;
 
 import com.skyline.Entity.Classify;
-import com.skyline.Util.ClassifyResultUtil;
 
 import java.util.List;
 
 public interface classifyService {
 
 
-    List<ClassifyResultUtil> classifyShow();
+    int addClassify(Classify classify);
 
-    /**
-     * 添加分类
-     * @param classify
-     * @return 添加后的分类表里的记录
-     */
-    List<ClassifyResultUtil> addClassify(Classify classify);
+    int delClassify(Integer cid);
 
+    int updateClassify(Classify classify);
 
-    List<ClassifyResultUtil> delClassify(Integer cid);
+    List<Classify> selectClassifyById(Integer cid);
 
-    List<ClassifyResultUtil> updateClassify(Classify classify);
+    List<Classify> selectClassify();
+
+    int delClassifyByIDs(List<Integer> cids);
+
 
 }

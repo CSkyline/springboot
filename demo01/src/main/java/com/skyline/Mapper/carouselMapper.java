@@ -8,6 +8,13 @@ import java.util.List;
 @Mapper
 public interface carouselMapper {
 
+
+    @Update("UPDATE sc_carousel SET name = #{name}, aurl = #{aurl} WHERE id = #{id} ")
+    int updatCarousel(Carousel carousel);
+
+    @Select("SELECT * FROM sc_carousel WHERE id = #{id}")
+    Carousel selectCarouselSingle(Integer id);
+
     /**
      * 通过id查询轮播图
      * @param id
@@ -30,8 +37,8 @@ public interface carouselMapper {
      * @param carousel
      * @return
      */
-    @Insert("INSERT INTO sc_carousel (id,name,url) VALUES (#{id},#{name},#{url})")
-    Carousel addCarousel(Carousel carousel);
+    @Insert("INSERT INTO sc_carousel (name,url,aurl) VALUES (#{name},#{url},#{aurl})")
+    int addCarousel(Carousel carousel);
 
 
     /**
@@ -39,7 +46,7 @@ public interface carouselMapper {
      * @param id
      * @return
      */
-    @Delete("DELETE FROM sc_carousel WHERE id = #{id}}")
+    @Delete("DELETE FROM sc_carousel WHERE id = #{id}")
     int delCarouselByid(@Param("id") Integer id);
 
 

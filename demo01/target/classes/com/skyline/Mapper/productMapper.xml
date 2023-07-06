@@ -4,14 +4,24 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.skyline.Mapper.productMapper">
-
+    <resultMap id="productResultMap" type="com.skyline.Request.productResult">
+        <id property="pid" column="pid"/>
+        <result property="pname" column="pname"/>
+        <result property="price" column="price"/>
+        <result property="description" column="description"/>
+        <result property="imgstr" column="imgstr"/>
+        <result property="soldnum" column="soldnum"/>
+        <result property="num" column="num"/>
+        <result property="addtime" column="addtime"/>
+        <result property="cname" column="cname"/>
+    </resultMap>
     <!--插入商品-->
-<!--    <insert id="insertProduct" parameterType="com.skyline.Entity.Product">-->
-<!--        INSERT INTO sc_product -->
-<!--            (pid, proname, price, description, imgstr, soldnum, cid, num, addtime) -->
-<!--        VALUES -->
-<!--            (#{pid}, #{proname}, #{price}, #{description}, #{imgstr}, #{soldnum}, #{cid}, #{num}, #{addtime})-->
-<!--    </insert>-->
+    <!--    <insert id="insertProduct" parameterType="com.skyline.Entity.Product">-->
+    <!--        INSERT INTO sc_product -->
+    <!--            (pid, pname, price, description, imgstr, soldnum, cid, num, addtime) -->
+    <!--        VALUES -->
+    <!--            (#{pid}, #{pname}, #{price}, #{description}, #{imgstr}, #{soldnum}, #{cid}, #{num}, #{addtime})-->
+    <!--    </insert>-->
 
     <!-- 根据多个id删除数据 -->
     <delete id="deleteProductByIds" parameterType="java.util.List">
@@ -26,7 +36,7 @@
     <update id="updateProductByPid" parameterType="com.skyline.Entity.Product">
         UPDATE sc_product
         <set>
-            <if test="proname != null">proname = #{proname},</if>
+            <if test="pname != null">pname = #{pname},</if>
             <if test="price != null">price = #{price},</if>
             <if test="description != null">description = #{description},</if>
             <if test="imgstr != null">imgstr = #{imgstr},</if>
@@ -40,22 +50,50 @@
 
     <!--根据商品名字进行模糊查找-->
     <select id="selectProductBypName" parameterType="java.lang.String" resultType="com.skyline.Entity.Product">
-        SELECT * FROM sc_product WHERE proname LIKE CONCAT('%', #{pname}, '%')
-        ORDER BY CASE WHEN proname LIKE #{pname} THEN 0 ELSE 1 END, proname
+        SELECT * FROM sc_product WHERE pname LIKE CONCAT('%', #{pname}, '%')
+        ORDER BY CASE WHEN pname LIKE #{pname} THEN 0 ELSE 1 END, pname
     </select>
 
     <!--通过商品名字和上架时间查找-->
-    <select id="selectProductByNameTime" resultType="com.skyline.Entity.Product">
-        SELECT * FROM sc_product
+    <select id="selectProductByNamePid" resultMap="productResultMap">
+        SELECT
+        p.pid, p.pname, p.price, p.description, p.imgstr, p.soldnum, p.num, p.addtime,
+        c.cid, c.cname
+        FROM
+        sc_product p
+        INNER JOIN
+        sc_classify c ON p.cid = c.cid
         <where>
-            <if test="proname != null and proname != ''">
-                AND proname like CONCAT('%',#{pname},'%')
+            <if test="pname != null and pname != ''">
+                AND pname like CONCAT('%',#{pname},'%')
             </if>
-            <if test="addtime != null ">
-                AND addtime &gt;= #{addtime}
+            <if test="pid != null and pid != ''">
+                AND pid like CONCAT('%',#{pid},'%')
             </if>
         </where>
     </select>
 
+    <!--使用多表连查-->
+
+    <select id="selectAllProductInfo" resultMap="productResultMap">
+        SELECT
+        p.pid, p.pname, p.price, p.description, p.imgstr, p.soldnum, p.num, p.addtime,
+        c.cid, c.cname
+        FROM
+        sc_product p
+        INNER JOIN
+        sc_classify c ON p.cid = c.cid
+    </select>
+
+    <select id="selectSingleProduct" resultMap="productResultMap">
+        SELECT
+        p.pid, p.pname, p.price, p.description, p.imgstr, p.soldnum, p.num, p.addtime,
+        c.cid, c.cname
+        FROM
+        sc_product p
+        INNER JOIN
+        sc_classify c ON p.cid = c.cid
+        WHERE p.pid = #{pid}
+    </select>
 
 </mapper>

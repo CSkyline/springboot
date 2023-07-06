@@ -8,3 +8,9 @@
 @version 指定程序版本号。
 @see 用于指定相关类、方法或文档链接。
 */
+
+aid:1
+uid:2
+pid:3
+cid:4
+oid:5

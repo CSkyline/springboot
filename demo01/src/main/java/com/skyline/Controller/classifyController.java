@@ -1,13 +1,13 @@
 package com.skyline.Controller;
 
-import com.skyline.Common.Result;
 import com.skyline.Entity.Classify;
+import com.skyline.Request.Result;
 import com.skyline.Service.classifyService;
-import com.skyline.Util.ClassifyResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * desc:分类控制层
@@ -27,11 +27,16 @@ public class classifyController {
      * @param classify
      * @return
      */
-    @PostMapping("/addclassify")
+    @PostMapping("/add")
     public Result addClassify(@RequestBody Classify classify) {
         if (classify != null) {
-            List<ClassifyResultUtil> cRList = classifyService.addClassify(classify);
-            return Result.success(cRList);
+            int flag = classifyService.addClassify(classify);
+            if (flag != 0) {
+                return Result.success("插入成功");
+            } else {
+                return Result.error("插入失败");
+            }
+
         } else {
             return Result.error("参数为空！");
         }
@@ -42,46 +47,62 @@ public class classifyController {
      * @param cid
      * @return
      */
-    @GetMapping("/delclassify")
+    @GetMapping("/del")
     public Result delClassify(Integer cid) {
 
         if (cid == null) {
             return Result.error("参数为空");
         } else {
-            List<ClassifyResultUtil> cRList = classifyService.delClassify(cid);
-            if (cRList != null) {
-                return Result.success(cRList);
+            int flag = classifyService.delClassify(cid);
+            if (flag != 0) {
+                return Result.success("删除成功");
             } else {
                 return Result.error("删除失败");
             }
         }
     }
 
+    @RequestMapping("/deletes")
+    public Result delClassifyByIds(@RequestBody Map<String, List<Integer>> cMap) {
+        List<Integer> cidList = cMap.get("cids");
+        if (cidList.isEmpty()) {
+            return Result.error("参数为空");
+        } else {
+            int flag = classifyService.delClassifyByIDs(cidList);
+            if (flag != 0) {
+                return Result.success("删除成功");
+            } else {
+                return Result.error("删除失败");
+            }
+        }
+    }
+
+
     /**
      * 查询classify表所有记录
      * @return
      */
-    @GetMapping("/classifyshow")
+    @GetMapping("/show")
     public Result classifyShow() {
-        List<ClassifyResultUtil> cRList = classifyService.classifyShow();
-        if (cRList.isEmpty() == false) {
-            return Result.success(cRList);
+        List<Classify> cList = classifyService.selectClassify();
+        if (cList.isEmpty() == false) {
+            return Result.success(cList);
         } else {
             return Result.error();
         }
     }
 
-    @PostMapping("/updateclassify")
+    @PostMapping("/update")
     public Result updateClassify(@RequestBody Classify classify) {
         System.out.println(classify);
         if (classify.getCid() == null) {
             return Result.error("参数错误");
         } else {
-            List<ClassifyResultUtil> cRList = classifyService.updateClassify(classify);
-            if (cRList.isEmpty() == false) {
-                return Result.success(cRList);
+            int flag = classifyService.updateClassify(classify);
+            if (flag != 0) {
+                return Result.success("修改成功");
             } else {
-                return Result.error();
+                return Result.error("修改失败");
             }
         }
     }

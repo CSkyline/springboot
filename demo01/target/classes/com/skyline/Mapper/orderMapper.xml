@@ -6,40 +6,48 @@
 <mapper namespace="com.skyline.Mapper.orderMapper">
 
     <!---->
-    <resultMap id="orderResultMap" type="com.skyline.Util.OrderResultUtil">
-        <id property="oid" column="oid"/>
-        <result property="uid" column="uid"/>
-        <result property="pid" column="pid"/>
-        <result property="rid" column="rid"/>
-        <result property="price" column="price"/>
-        <result property="addtime" column="addtime"/>
-        <result property="status" column="status"/>
-        <result property="pnum" column="pnum"/>
-        <result property="postage" column="postage"/>
-        <result property="account" column="account"/>
-        <result property="phone" column="phone"/>
-        <result property="proname" column="proname"/>
-    </resultMap>
-    <!--使用多表连查，將用戶賬戶，用戶電話,商品名字加入結果集中-->
-    <select id="findOrderByOidAddTimeAndAccount" resultMap="orderResultMap">
-        SELECT o.*, u.account,u.phone,p.proname
-        FROM sc_order o
-        INNER JOIN sc_user u ON o.uid = u.uid
-        LEFT JOIN sc_product p ON o.pid = p.pid
-        <!--        LEFT JOIN sc_receivinginfo r ON r.rid = r.rid-->
+    <!--    <resultMap id="orderResultMap" type="com.skyline.Request.OrderResult">-->
+    <!--        <id property="oid" column="oid"/>-->
+    <!--        <result property="uid" column="uid"/>-->
+    <!--        <result property="pid" column="pid"/>-->
+    <!--        <result property="rid" column="rid"/>-->
+    <!--        <result property="price" column="price"/>-->
+    <!--        <result property="addtime" column="addtime"/>-->
+    <!--        <result property="status" column="status"/>-->
+    <!--        <result property="pnum" column="pnum"/>-->
+    <!--        <result property="order.postage" column="postage"/>-->
+    <!--        <result property="account" column="account"/>-->
+    <!--        <result property="phone" column="phone"/>-->
+    <!--        <result property="pname" column="proname"/>-->
+    <!--    </resultMap>-->
+    <!--    &lt;!&ndash;使用多表连查，將用戶賬戶，用戶電話,商品名字加入結果集中&ndash;&gt;-->
+    <!--    <select id="findOrderByOidAddTimeAndAccount" resultMap="orderResultMap">-->
+    <!--        SELECT o.*, u.account,u.phone,p.proname-->
+    <!--        FROM sc_order o-->
+    <!--        INNER JOIN sc_user u ON o.uid = u.uid-->
+    <!--        LEFT JOIN sc_product p ON o.pid = p.pid-->
+    <!--        &lt;!&ndash;        LEFT JOIN sc_receivinginfo r ON r.rid = r.rid&ndash;&gt;-->
+    <!--        <where>-->
+    <!--            <if test="oid != null">-->
+    <!--                AND o.oid = #{oid}-->
+    <!--            </if>-->
+    <!--            <if test="addtime != null">-->
+    <!--                AND o.addtime = #{addtime}-->
+    <!--            </if>-->
+    <!--            <if test="account != null">-->
+    <!--                AND u.account = #{account}-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </select>-->
+
+    <select id="vagueSelectById" resultType="com.skyline.Entity.Order">
+        SELECT * FROM sc_order
         <where>
-            <if test="oid != null">
-                AND o.oid = #{oid}
-            </if>
-            <if test="addtime != null">
-                AND o.addtime = #{addtime}
-            </if>
-            <if test="account != null">
-                AND u.account = #{account}
+            <if test="oid != null and oid != ''">
+                AND oid like CONCAT('%',#{oid},'%')
             </if>
         </where>
     </select>
-
 
 </mapper>
 

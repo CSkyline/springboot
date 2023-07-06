@@ -1,7 +1,7 @@
 package com.skyline.Controller;
 
-import com.skyline.Common.Result;
 import com.skyline.Entity.Admin;
+import com.skyline.Request.Result;
 import com.skyline.Service.adminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,16 +22,17 @@ public class adminController {
 
     /**
      * 登录后台管理系统（管理员）
-     * @param account
-     * @param password
+     * @param a
      * @return
      */
     @RequestMapping("/login")
-    //    public Result adminLogin(@RequestBody Admin a)
-    public Result adminLogin(String account, String password) {
-        //        String account = a.getAccount();
-        //        String password = a.getPassword();
+    public Result adminLogin(@RequestBody Admin a)
+    //    public Result adminLogin(String account, String password)
+    {
+        String account = a.getAccount();
+        String password = a.getPassword();
         System.out.println(account);
+        System.out.println(password);
         Admin admin = adminService.loginAdmin(account, password);
 
         if (admin != null) {
@@ -92,18 +93,35 @@ public class adminController {
 
     /**
      * 修改管理员信息
-     * @param admin 管理员信息
+     * @param aReceive
      * @return
      */
-    @RequestMapping("/updateadmin")
-    public Result updateAdmin(@RequestBody Admin admin) {
-        int flag = adminService.updateAdmin(admin);
-        if (flag != 0) {
-            System.out.println(flag);
-            return Result.success("修改成功");
+    @RequestMapping("/update")
+    public Result updateAdmin(@RequestBody Admin aReceive) {
+        Admin aResult = adminService.updateAdmin(aReceive);
+        if (aResult != null) {
+            return Result.success("修改成功", aResult);
         } else {
-            return Result.error("修改失败");
+            return Result.error("修改失败!");
         }
+    }
+
+    @RequestMapping("/updatepassword")
+    public Result updatePassword(@RequestBody Admin aReceive) {
+        Integer aid = aReceive.getAid();
+        String oldpassword = aReceive.getOldpassword();
+        String password = aReceive.getPassword();
+        if (aid != null && oldpassword != null && password != null) {
+            int flag = adminService.updatePassword(aid, oldpassword, password);
+            if (flag != 0) {
+                return Result.success("修改密码成功");
+            } else {
+                return Result.error("修改密码失败");
+            }
+        } else {
+            return Result.error("参数为空");
+        }
+
     }
 
 

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 public interface adminMapper {
 
     @Select("SELECT * FROM sc_admin WHERE account = #{account} AND password = #{password}")
-    Admin selectByAP(@Param("account") String account,@Param("password") String password);
+    Admin selectByAP(@Param("account") String account, @Param("password") String password);
 
 
     @Select("SELECT COUNT(*) FROM sc_admin WHERE account = #{account}")
@@ -17,4 +17,13 @@ public interface adminMapper {
     int insertAdmin(Admin admin);
 
     int updateByAid(Admin admin);
+
+    @Select("SELECT * FROM sc_admin WHERE aid = #{aid}")
+    Admin selectByAid(Integer aid);
+
+    @Update("UPDATE sc_admin SET password = #{password} WHERE aid = #{aid}")
+    int updatePassword(@Param("aid") Integer aid, @Param("password") String password);
+
+    @Select("SELECT COUNT(*) FROM sc_admin WHERE aid = #{aid} AND password = #{password}")
+    int selectPasswordByAid(@Param("aid") Integer aid, @Param("password") String oidPassword);
 }
